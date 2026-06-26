@@ -3,6 +3,7 @@ import Editor from './components/Editor';
 import Preview from './components/Preview';
 import { pumlExamples } from './utils/pumlExamples';
 import { generatePlantUML, explainPlantUML } from './utils/aiGenerate';
+import { getPlantUmlUrl } from './utils/plantUML';
 
 function App() {
   const [code, setCode] = useState<string>(pumlExamples.sequence);
@@ -23,6 +24,20 @@ function App() {
     const result = await explainPlantUML(code);
     setExplanation(result);
     setIsExplaining(false);
+  };
+
+  const handleExportSvg = async () => {
+    const url = getPlantUmlUrl(code, 'svg');
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const downloadUrl = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = 'diagram.svg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(downloadUrl);
   };
 
   return (
@@ -51,6 +66,12 @@ function App() {
             {explanation}
           </div>
         )}
+      </div>
+
+      <div style={{ backgroundColor: '#e8f8e8', padding: '15px', borderRadius: '8px', marginBottom: '16px' }}>
+        <button onClick={handleExportSvg}>
+          Export as SVG
+        </button>
       </div>
 
       <div style={{ display: 'flex', gap: '20px' }}>
