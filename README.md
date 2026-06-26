@@ -1,3 +1,20 @@
-# Aiuda PlantUML Mini API v2
+# Aiuda - PlantUML Renderer
 
-React 18 + Vite + TypeScript project for PlantUML rendering.
+## Teknikstack
+
+- React 18
+- Vite
+- TypeScript
+- npm (package manager)
+- Endast useState för state management
+
+## Installation och körning
+
+```bash
+npm install
+npm run dev
+```
+
+## Utveckling
+
+Projektet använder Vite som build tool och development server. Kör `npm run dev` för att starta utvecklingsservern.
