@@ -1,10 +1,15 @@
-import React from 'react';
+interface EditorProps {
+  code: string;
+  onChange: (code: string) => void;
+}
 
-const Editor: React.FC = () => {
+const Editor = ({ code, onChange }: EditorProps) => {
   return (
-    <div style={{ padding: '15px', backgroundColor: '#f0f0f0', borderRadius: '8px', marginBottom: '16px' }}>
-      Editor
-    </div>
+    <textarea
+      value={code}
+      onChange={(e) => onChange(e.target.value)}
+      style={{ width: '100%', height: '300px', fontFamily: 'monospace', padding: '10px' }}
+    />
   );
 };
 
