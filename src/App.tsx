@@ -2,18 +2,27 @@ import { useState } from 'react';
 import Editor from './components/Editor';
 import Preview from './components/Preview';
 import { pumlExamples } from './utils/pumlExamples';
-import { generatePlantUML } from './utils/aiGenerate';
+import { generatePlantUML, explainPlantUML } from './utils/aiGenerate';
 
 function App() {
   const [code, setCode] = useState<string>(pumlExamples.sequence);
   const [prompt, setPrompt] = useState<string>('');
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [explanation, setExplanation] = useState<string>('');
+  const [isExplaining, setIsExplaining] = useState<boolean>(false);
 
   const handleGenerate = async () => {
     setIsGenerating(true);
     const result = await generatePlantUML(prompt);
     setCode(result);
     setIsGenerating(false);
+  };
+
+  const handleExplain = async () => {
+    setIsExplaining(true);
+    const result = await explainPlantUML(code);
+    setExplanation(result);
+    setIsExplaining(false);
   };
 
   return (
@@ -31,6 +40,17 @@ function App() {
         <button onClick={handleGenerate} disabled={isGenerating}>
           {isGenerating ? 'Generating...' : 'Generate Diagram'}
         </button>
+      </div>
+
+      <div style={{ backgroundColor: '#e8f4f8', padding: '15px', borderRadius: '8px', marginBottom: '16px' }}>
+        <button onClick={handleExplain} disabled={isExplaining}>
+          {isExplaining ? 'Explaining...' : 'Explain Current Diagram'}
+        </button>
+        {explanation && (
+          <div style={{ marginTop: '10px', padding: '10px', border: '1px solid #ccc', borderRadius: '4px' }}>
+            {explanation}
+          </div>
+        )}
       </div>
 
       <div style={{ display: 'flex', gap: '20px' }}>

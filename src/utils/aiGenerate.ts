@@ -13,3 +13,12 @@ S --> User: Response
     }, 1000);
   });
 }
+
+export async function explainPlantUML(code: string): Promise<string> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const explanation = `This PlantUML diagram contains:\n\n- A start and end marker (@startuml/@enduml)\n- ${code.split('\n').filter(line => line.trim().startsWith('actor') || line.trim().startsWith('participant') || line.trim().startsWith('entity')).length} component(s)\n- ${code.split('\n').filter(line => line.includes('->') || line.includes('-->')).length} interaction(s)\n\nThe diagram appears to show a basic flow between components.`;
+      resolve(explanation);
+    }, 1000);
+  });
+}
