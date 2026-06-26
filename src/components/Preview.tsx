@@ -1,10 +1,15 @@
-import React from 'react';
+import { getPlantUmlUrl } from '../utils/plantUML';
 
-const Preview: React.FC = () => {
+interface PreviewProps {
+  code: string;
+}
+
+const Preview = ({ code }: PreviewProps) => {
   return (
-    <div style={{ padding: '15px', backgroundColor: '#e8f4f8', borderRadius: '8px', marginBottom: '16px' }}>
-      Preview
-    </div>
+    <img 
+      src={getPlantUmlUrl(code)} 
+      style={{ maxWidth: '100%', border: '1px solid #ccc', borderRadius: '4px' }}
+    />
   );
 };
 
